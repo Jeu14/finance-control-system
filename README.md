@@ -1,7 +1,7 @@
 ![](https://i.imgur.com/xG74tOh.png)
 
 # Desafio | Front-end - Módulo 8
-
+ 
 Após alguns meses trabalhando em projetos mais simples, você foi designado pelo seu Tech Lead para desenvolver uma aplicação que será apresentada a um cliente muito importante.
 
 Para o seu desenvolvimento foi liberado o layout que você pode encontrar no seguinte [link](https://www.figma.com/file/BwOAJkF8OeMON36TyFdhkj/DinDin-2.0?node-id=0%3A1).
