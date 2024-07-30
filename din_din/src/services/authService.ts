@@ -10,3 +10,12 @@ export const loginUser = async (email: string, senha: string) => {
     throw error.response?.data?.mensagem || 'Erro desconhecido';
   }
 };
+
+export const registerUser = async (nome: string, email: string, senha: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/usuario`, { nome, email, senha })
+    return response.data
+  } catch (error: any) {
+    throw new Error(error.response?.data?.mensagem || 'Erro ao cadastrar usuário')
+  }
+}
