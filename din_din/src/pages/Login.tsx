@@ -7,7 +7,7 @@ import { loginUser } from '../services/authService';
 import { setItem } from '../localStorage/localStorage';
 
 
-export const Login = ( setIsAuthenticated ):any => {
+export const Login = ( setIsAuthenticated ) => {
   const [form, setForm] = useState<{ email: string; senha: string }>({
     email: '',
     senha: ''
