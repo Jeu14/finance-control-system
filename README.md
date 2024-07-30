@@ -1,4 +1,5 @@
 
+npm create vite@latest din_din -- --template react-ts
 
 
 
