@@ -1,42 +1,44 @@
-import '../index.css';
-import './style.css';
-import { HeaderLogo } from '../components/LogoHeader';
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../services/authService';
-import { setItem } from '../localStorage/localStorage';
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { HeaderLogo } from "../components/Logoheader/LogoHeader";
+import "../index.css";
+import { setItem } from "../localStorage/localStorage";
+import { loginUser } from "../services/authService";
+import "./style.css";
+import {LoginProps} from '../Types/types'
 
 
-export const Login = ( setIsAuthenticated ) => {
+
+export const Login = ({ setIsAuthenticated }: LoginProps) => {
   const [form, setForm] = useState<{ email: string; senha: string }>({
-    email: '',
-    senha: ''
+    email: "",
+    senha: "",
   });
-  const [erro, setErro] = useState<string>('');
+  const [erro, setErro] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErro('');
+    setErro("");
 
     if (!form.email) {
-      setErro('E-mail precisa ser fornecido');
+      setErro("E-mail precisa ser fornecido");
       return;
     }
     if (!form.senha) {
-      setErro('Senha precisa ser fornecida');
+      setErro("Senha precisa ser fornecida");
       return;
     }
 
     try {
       const data = await loginUser(form.email, form.senha);
-      setItem('token', data.token);
-      setItem('userId', data.usuario.id);
-      setItem('name', data.usuario.nome);
+      setItem("token", data.token);
+      setItem("userId", data.usuario.id);
+      setItem("name", data.usuario.nome);
       setIsAuthenticated(true);
-      navigate('/home');
+      navigate("/home");
     } catch (error: any) {
-      setErro(error || 'Usuário e/ou senha inválido(s).');
+      setErro(error.message || "Usuário e/ou senha inválido(s).");
     }
   };
 
@@ -46,43 +48,43 @@ export const Login = ( setIsAuthenticated ) => {
   };
 
   return (
-    <div className='body-login-signup'>
+    <div className="body-login-signup">
       <HeaderLogo isLoggedIn={false} />
-
       <main>
-        <div className='texto-principal'>
-          <h1>Controle suas <strong>finanças</strong>, sem planilha chata.</h1>
-          <p>Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.</p>
+        <div className="texto-principal">
+          <h1>
+            Controle suas <strong>finanças</strong>, sem planilha chata.
+          </h1>
+          <p>
+            Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você
+            tem tudo num único lugar e em um clique de distância.
+          </p>
           <button
-            onClick={() => navigate('/sign-up')}
-            style={{ cursor: 'pointer' }}
+            onClick={() => navigate("/sign-up")}
+            style={{ cursor: "pointer" }}
           >
             Cadastre-se
           </button>
         </div>
-
-        <div className='area-login'>
+        <div className="area-login">
           <h3>Login</h3>
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">E-mail</label>
             <input
-              id='email'
+              id="email"
               type="text"
               value={form.email}
               onChange={handleChangeForm}
             />
-
             <label htmlFor="senha">Senha</label>
             <input
-              id='senha'
+              id="senha"
               type="password"
               value={form.senha}
               onChange={handleChangeForm}
             />
-
-            {erro && <span className='erroMensagem'>{erro}</span>}
-
-            <button type='submit'>Entrar</button>
+            {erro && <span className="erroMensagem">{erro}</span>}
+            <button type="submit">Entrar</button>
           </form>
         </div>
       </main>

@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+
+
+
+
 const API_URL = 'https://desafio-backend-03-dindin.pedagogico.cubos.academy';
 
 export const loginUser = async (email: string, senha: string) => {

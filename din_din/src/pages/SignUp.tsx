@@ -1,10 +1,10 @@
 import "../index.css";
 import "./style.css";
 
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, ChangeEvent, FormEvent } from "react";
 
-import { HeaderLogo } from "../components/LogoHeader";
+import { HeaderLogo } from "../components/Logoheader/LogoHeader";
 import { registerUser } from "../services/authService";
 
 export const Signup = () => {
@@ -53,7 +53,7 @@ export const Signup = () => {
 
   const handleChangeForm = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    setForm(prev => ({ ...prev, [id]: value }));
+    setForm((prev) => ({ ...prev, [id]: value }));
   };
 
   return (
