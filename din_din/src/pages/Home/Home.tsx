@@ -8,11 +8,14 @@ import { ResumeTable } from "../../components/resumetable/ResumeTable";
 import { Tabela } from "../../components/table/tabela";
 import { getItem } from "../../localStorage/localStorage";
 import { Transacao } from "../../Types/types";
+import AddRegisterModal from "../../components/registerModal/AddRegisterModal";
 
 export const Home = () => {
   const [addRegister, setAddRegister] = useState<boolean>(false);
   const [editRegister, setEditRegister] = useState<boolean>(false);
-  const [currentRegister, setCurrentRegister] = useState<Transacao | undefined>(undefined);
+  const [currentRegister, setCurrentRegister] = useState<Transacao | undefined>(
+    undefined
+  );
   const [transacao, setTransacao] = useState<Transacao[]>([]);
   const navigate = useNavigate();
 
@@ -41,8 +44,10 @@ export const Home = () => {
               <button onClick={() => setAddRegister(true)}>
                 Adicionar Registro
               </button>
-              
-
+              <AddRegisterModal
+                show={addRegister}
+                onClose={() => setAddRegister(false)}
+              />
             </div>
           </div>
         </div>
