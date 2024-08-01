@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AddRegisterModal.css";
+import { getItem } from "../../localStorage/localStorage";
 
 interface AddRegisterModalProps {
   show: boolean;
@@ -12,35 +13,64 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
   onClose,
 }) => {
   const [valor, setValor] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [categoria, setCategoria] = useState<ICategoria[]>([]);
   const [data, setData] = useState("");
   const [descricao, setDescricao] = useState("");
   const [tipo, setTipo] = useState<"entrada" | "saida">("entrada");
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
 
+  const token = getItem("token");
 
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get('https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria');
+        const response = await axios.get(
+          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCategoria(response.data);
+        console.log(response);
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error("Erro ao buscar categorias:", error);
       }
     };
 
     fetchCategorias();
   }, []);
 
+  useEffect(() => {
+    setCategoriaSelecionada(categoria[0]?.descricao)
+  }, [categoria])
+
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("entrou");
+    
     e.preventDefault();
-    const newRegister = { valor, categoria, data, descricao };
+    const categoriaId = categoria.find(option => option.descricao === categoriaSelecionada)?.id
+    const newRegister = { tipo, valor, categoria_id: categoriaId, data, descricao };
 
     try {
       const response = await axios.post(
-        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacoes",
-        newRegister
+        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
+        newRegister,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      console.log("Registro adicionado:", response.data);
+      console.log("Registro adicionado:", response);
+      if (response.status === 201) {
+        setTipo("entrada") 
+        setCategoriaSelecionada("")
+        setData("")
+        setValor("")
+        setDescricao("")
+      }
       onClose();
     } catch (error) {
       console.error("Erro ao adicionar registro:", error);
@@ -84,7 +114,7 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
           <div className="form-group">
             <label>Valor</label>
             <input
-              type="text"
+              type="number"
               value={valor}
               onChange={e => setValor(e.target.value)}
             />
@@ -92,13 +122,14 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
           <div className="form-group">
             <label>Categoria</label>
             <select
-              value={categoria}
-              onChange={e => setCategoria(e.target.value)}
+              value={categoriaSelecionada}
+              onChange={e => setCategoriaSelecionada(e.target.value)}
             >
-              <option value="">Selecione</option>
-              <option value="alimentacao">Alimentação</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
+              {categoria.map((option, index) => (
+                <option key={index} value={option.descricao}>
+                  {option.descricao}
+                </option>
+              ))}
             </select>
           </div>
           <div className="form-group">
@@ -125,5 +156,10 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
     </div>
   );
 };
+
+interface ICategoria {
+  id: string;
+  descricao: string;
+}
 
 export default AddRegisterModal;
