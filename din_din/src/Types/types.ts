@@ -2,7 +2,7 @@ export interface Transacao {
   id: number;
   data: string;
   descricao: string;
-  categoria: string;
+  categoria_id: number;
   valor: number;
   tipo: 'entrada' | 'saida';
 }

@@ -4,10 +4,34 @@ import TrashIcon from '../../assets/icons-8-lixo-1.svg';
 import Triangulo from '../../assets/triangulo.svg';
 import axios from 'axios';
 import { getItem } from '../../localStorage/localStorage';
-import { TabelaProps } from '../../Types/types';
+import { ICategoria, TabelaProps } from '../../Types/types';
+import { useEffect, useState } from 'react';
 
 export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentRegister }: TabelaProps) => {
   const token = getItem("token");
+  const [categorias, setCategorias] = useState<ICategoria[]>([])
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const response = await axios.get('https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCategorias(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar categorias:", error);
+      }
+    };
+
+    fetchCategorias();
+  }, [token]);
+
+  const getCategoriaDescricao = (categoriaId: any) => {
+    const categoria = categorias.find(cat => cat.id === categoriaId);
+    return categoria ? categoria.descricao : 'Desconhecida';
+  };
 
   const handleData = (data: string) => {
     const date = new Date(data).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
@@ -66,7 +90,7 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
               <td>{handleData(transacao.data)}</td>
               <td>{handleGetDay(transacao.data)}</td>
               <td className='table-description'>{transacao.descricao}</td>
-              <td className='table-category'>{transacao.categoria}</td>
+              <td className='table-category'>{getCategoriaDescricao(transacao.categoria_id)}</td>
               <td className='col-value' style={{ color: transacao.tipo === 'saida' ? '#FA8C10' : '#7B61FF' }}>
                 R$ {transacao.valor}
               </td>
