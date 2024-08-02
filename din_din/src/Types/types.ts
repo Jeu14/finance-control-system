@@ -7,6 +7,17 @@ export interface Transacao {
   tipo: 'entrada' | 'saida';
 }
 
+export interface ICategoria {
+  id: string;
+  descricao: string;
+}
+
+export interface AddRegisterModalProps {
+  show: boolean;
+  onClose: () => void;
+  onNewTransaction: () => void;
+}
+
 export interface HeaderLogoProps {
   isLoggedIn: boolean;
 }

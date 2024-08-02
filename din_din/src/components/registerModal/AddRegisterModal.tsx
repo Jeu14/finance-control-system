@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { NumericFormat } from 'react-number-format';
+
 import "./AddRegisterModal.css";
 import { getItem } from "../../localStorage/localStorage";
-
-interface AddRegisterModalProps {
-  show: boolean;
-  onClose: () => void;
-  onNewTransaction: () => void;
-}
-
-interface ICategoria {
-  id: string;
-  descricao: string;
-}
+import { AddRegisterModalProps, ICategoria } from "../../Types/types";
 
  export const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
   show,
@@ -122,10 +114,20 @@ interface ICategoria {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Valor</label>
-            <input
-              type="number"
+            <NumericFormat
               value={valor}
-              onChange={(e) => setValor(e.target.value)}
+              onValueChange={(values) => {
+                const { value } = values;
+                setValor(value);
+              }}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              decimalScale={2}
+              fixedDecimalScale
+              allowNegative={false}
+              className="input"
+              required
             />
           </div>
           <div className="form-group">
@@ -147,6 +149,7 @@ interface ICategoria {
               type="date"
               value={data}
               onChange={(e) => setData(e.target.value)}
+              required
             />
           </div>
           <div className="form-group">
@@ -155,6 +158,7 @@ interface ICategoria {
               type="text"
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
+              required
             />
           </div>
           <button className="confirm-button" type="submit">
