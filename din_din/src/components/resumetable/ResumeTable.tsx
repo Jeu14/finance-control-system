@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import "./style.css";
-import { ResumeTableProps } from "../../Types/types";
+import { ResumeTableProps, Transacao } from "../../Types/types";
 import axios from "axios";
 import { getItem } from "../../localStorage/localStorage";
 
 export const ResumeTable = ({ transacao }: ResumeTableProps) => {
   const [entrada, setEntrada] = useState<number>(0);
-  const [exit, setExit] = useState<number>(0);
-  const saldo = entrada - exit;
+  const [saida, setSaida] = useState<number>(0);
+  const saldo = entrada - saida;
 
   const token = getItem("token");
 
@@ -23,30 +23,29 @@ export const ResumeTable = ({ transacao }: ResumeTableProps) => {
           }
         );
         setEntrada(response.data.entrada);
-        setExit(response.data.saida);
+        setSaida(response.data.saida);
         console.log(response);
       } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
+        console.error("Erro ao buscar resumo:", error);
       }
     };  
-      fetchResumo()
-  }, []);
+    fetchResumo();
+  }, [token]);
 
   useEffect(() => {
     let totalEntrada = 0;
     let totalSaida = 0;
 
-    transacao.forEach(transacao => {
-      if (!transacao.saida) {
+    transacao.forEach((transacao: Transacao) => {
+      if (transacao.tipo === 'entrada') {
         totalEntrada += Number(transacao.valor);
-      }
-      if (transacao.saida) {
+      } else if (transacao.tipo === 'saida') {
         totalSaida += Number(transacao.valor);
       }
     });
 
     setEntrada(Number(totalEntrada.toFixed(2)));
-    setExit(Number(totalSaida.toFixed(2)));
+    setSaida(Number(totalSaida.toFixed(2)));
   }, [transacao]);
 
   return (
@@ -66,7 +65,7 @@ export const ResumeTable = ({ transacao }: ResumeTableProps) => {
             <th scope="row" className="exit-txt">
               Saídas
             </th>
-            <td className="exit">R$ {exit.toFixed(2)}</td>
+            <td className="exit">R$ {saida.toFixed(2)}</td>
           </tr>
         </tbody>
       </table>

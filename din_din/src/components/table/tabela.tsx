@@ -1,16 +1,13 @@
-
 import '../../index.css';
 import EditIcon from '../../assets/icons-8-editar-3.svg';
 import TrashIcon from '../../assets/icons-8-lixo-1.svg';
 import Triangulo from '../../assets/triangulo.svg';
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { getItem } from '../../localStorage/localStorage';
 import { TabelaProps } from '../../Types/types';
 
-
-
 export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentRegister }: TabelaProps) => {
-  const [idTransacao, setIdTransacao] = useState<number | null>(null);
-  const [idEditTransacao, setIdEditTransacao] = useState<number | null>(null);
+  const token = getItem("token");
 
   const handleData = (data: string) => {
     const date = new Date(data).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
@@ -24,25 +21,27 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
     return daysOfWeek[day];
   };
 
-  const handleDeleteItem = (event: number) => {
-    setIdTransacao(event);
+  const handleDeleteItem = async (id: number) => {
+    try {
+      await axios.delete(
+        `https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTransacao(transacao.filter((transacao) => transacao.id !== id));
+      
+    } catch (error) {
+      console.error("Erro ao excluir transação:", error);
+    }
   };
 
-  const handleEditRegister = (event: number) => {
-    setIdEditTransacao(event);
+  const handleEditRegister = (id: number) => {
     setEditRegister(true);
+    setCurrentRegister(transacao.find((transacao) => transacao.id === id));
   };
-
-  useEffect(() => {
-    if (idTransacao !== null) {
-      setTransacao(transacao.filter((transacao) => transacao.id !== idTransacao));
-      setIdTransacao(null);
-    }
-
-    if (idEditTransacao !== null) {
-      setCurrentRegister(transacao.find((transacao) => transacao.id === idEditTransacao));
-    }
-  }, [idTransacao, idEditTransacao, setTransacao, setCurrentRegister, transacao]);
 
   return (
     <div className='container-table'>
@@ -68,7 +67,7 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
               <td>{handleGetDay(transacao.data)}</td>
               <td className='table-description'>{transacao.descricao}</td>
               <td className='table-category'>{transacao.categoria}</td>
-              <td className='col-value' style={{ color: transacao.saida ? '#FA8C10' : '#7B61FF' }}>
+              <td className='col-value' style={{ color: transacao.tipo === 'saida' ? '#FA8C10' : '#7B61FF' }}>
                 R$ {transacao.valor}
               </td>
               <td className='edit-icon'>

@@ -8,7 +8,8 @@ import { ResumeTable } from "../../components/resumetable/ResumeTable";
 import { Tabela } from "../../components/table/tabela";
 import { getItem } from "../../localStorage/localStorage";
 import { Transacao } from "../../Types/types";
-import AddRegisterModal from "../../components/registerModal/AddRegisterModal";
+import {AddRegisterModal} from "../../components/registerModal/AddRegisterModal";
+import axios from "axios";
 
 export const Home = () => {
   const [addRegister, setAddRegister] = useState<boolean>(false);
@@ -25,6 +26,31 @@ export const Home = () => {
       navigate("/login");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    fetchTransacoes();
+  }, []);
+
+  const fetchTransacoes = async () => {
+    const token = getItem("token");
+    try {
+      const response = await axios.get(
+        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTransacao(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar transações:", error);
+    }
+  };
+
+  const handleNewTransaction = () => {
+    fetchTransacoes(); 
+  };
 
   return (
     <div className="background">
@@ -47,6 +73,7 @@ export const Home = () => {
               <AddRegisterModal
                 show={addRegister}
                 onClose={() => setAddRegister(false)}
+                onNewTransaction={handleNewTransaction}
               />
             </div>
           </div>

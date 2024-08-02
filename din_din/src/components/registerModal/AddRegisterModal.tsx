@@ -6,11 +6,18 @@ import { getItem } from "../../localStorage/localStorage";
 interface AddRegisterModalProps {
   show: boolean;
   onClose: () => void;
+  onNewTransaction: () => void;
 }
 
-const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
+interface ICategoria {
+  id: string;
+  descricao: string;
+}
+
+ export const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
   show,
   onClose,
+  onNewTransaction,
 }) => {
   const [valor, setValor] = useState("");
   const [categoria, setCategoria] = useState<ICategoria[]>([]);
@@ -33,25 +40,26 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
           }
         );
         setCategoria(response.data);
-        console.log(response);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
 
     fetchCategorias();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
-    setCategoriaSelecionada(categoria[0]?.descricao)
-  }, [categoria])
+    if (categoria.length > 0) {
+      setCategoriaSelecionada(categoria[0].descricao);
+    }
+  }, [categoria]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("entrou");
-    
     e.preventDefault();
-    const categoriaId = categoria.find(option => option.descricao === categoriaSelecionada)?.id
-    const newRegister = { tipo, valor, categoria_id: categoriaId, data, descricao };
+    const categoriaId = categoria.find(
+      (option) => option.descricao === categoriaSelecionada
+    )?.id;
+    const newRegister = { tipo, valor: Number(valor), categoria_id: categoriaId, data, descricao };
 
     try {
       const response = await axios.post(
@@ -63,13 +71,14 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
           },
         }
       );
-      console.log("Registro adicionado:", response);
+
       if (response.status === 201) {
-        setTipo("entrada") 
-        setCategoriaSelecionada("")
-        setData("")
-        setValor("")
-        setDescricao("")
+        setTipo("entrada");
+        setCategoriaSelecionada(categoria[0].descricao);
+        setData("");
+        setValor("");
+        setDescricao("");
+        onNewTransaction();
       }
       onClose();
     } catch (error) {
@@ -116,17 +125,17 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
             <input
               type="number"
               value={valor}
-              onChange={e => setValor(e.target.value)}
+              onChange={(e) => setValor(e.target.value)}
             />
           </div>
           <div className="form-group">
             <label>Categoria</label>
             <select
               value={categoriaSelecionada}
-              onChange={e => setCategoriaSelecionada(e.target.value)}
+              onChange={(e) => setCategoriaSelecionada(e.target.value)}
             >
-              {categoria.map((option, index) => (
-                <option key={index} value={option.descricao}>
+              {categoria.map((option) => (
+                <option key={option.id} value={option.descricao}>
                   {option.descricao}
                 </option>
               ))}
@@ -137,7 +146,7 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
             <input
               type="date"
               value={data}
-              onChange={e => setData(e.target.value)}
+              onChange={(e) => setData(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -145,7 +154,7 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
             <input
               type="text"
               value={descricao}
-              onChange={e => setDescricao(e.target.value)}
+              onChange={(e) => setDescricao(e.target.value)}
             />
           </div>
           <button className="confirm-button" type="submit">
@@ -157,9 +166,3 @@ const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
   );
 };
 
-interface ICategoria {
-  id: string;
-  descricao: string;
-}
-
-export default AddRegisterModal;
