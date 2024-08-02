@@ -169,4 +169,3 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
     </div>
   );
 };
-
