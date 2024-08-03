@@ -4,12 +4,15 @@ import TrashIcon from '../../assets/icons-8-lixo-1.svg';
 import Triangulo from '../../assets/triangulo.svg';
 import axios from 'axios';
 import { getItem } from '../../localStorage/localStorage';
-import { ICategoria, TabelaProps } from '../../Types/types';
+import { ICategoria, TabelaProps, Transacao } from '../../Types/types';
 import { useEffect, useState } from 'react';
+import EditRegisterModal from '../editModal/EditRegisterModal';
 
 export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentRegister }: TabelaProps) => {
   const token = getItem("token");
   const [categorias, setCategorias] = useState<ICategoria[]>([])
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentEditRegister, setCurrentEditRegister] = useState<Transacao | undefined>(undefined);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -63,8 +66,8 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
   };
 
   const handleEditRegister = (id: number) => {
-    setEditRegister(true);
-    setCurrentRegister(transacao.find((transacao) => transacao.id === id));
+    setShowEditModal(true);
+    setCurrentEditRegister(transacao.find((transacao) => transacao.id === id));
   };
 
   return (
@@ -102,6 +105,13 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
           ))}
         </tbody>
       </table>
+      {showEditModal && (
+        <EditRegisterModal
+          show={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          currentRegister={currentEditRegister}
+        />
+      )}
     </div>
   );
 };
