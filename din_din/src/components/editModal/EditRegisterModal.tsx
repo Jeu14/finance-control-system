@@ -2,21 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../registerModal/AddRegisterModal.css";
 import "./EditRegisterModal.css";
-import { Transacao } from "../../Types/types";
+import { EditCategoria, EditRegisterModalProps} from "../../Types/types";
 import { NumericFormat } from "react-number-format";
 import { getItem } from "../../localStorage/localStorage";
 
-interface EditRegisterModalProps {
-  show: boolean;
-  onClose: () => void;
-  onUpdate: () => void;
-  currentRegister: Transacao | undefined;
-}
 
-interface Categoria {
-  id: number;
-  descricao: string;
-}
 
 export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
   show,
@@ -29,7 +19,7 @@ export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
   const [data, setData] = useState<string>(currentRegister?.data.split("T")[0] || "");
   const [descricao, setDescricao] = useState<string>(currentRegister?.descricao || "");
   const [tipo, setTipo] = useState<"entrada" | "saida">(currentRegister?.tipo || "entrada");
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [categorias, setCategorias] = useState<EditCategoria[]>([]);
   const token = getItem("token");
 
   useEffect(() => {
@@ -88,7 +78,7 @@ export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
   };
 
   if (!show) return null; 
-  
+
   return (
     <div className="modal">
       <div className="modal-content">

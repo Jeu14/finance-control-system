@@ -36,3 +36,15 @@ export interface TabelaProps {
 export interface ResumeTableProps {
   transacao: Transacao[];
 }
+
+export interface EditRegisterModalProps {
+  show: boolean;
+  onClose: () => void;
+  onUpdate: () => void;
+  currentRegister: Transacao | undefined;
+}
+
+export interface EditCategoria {
+  id: number;
+  descricao: string;
+}
