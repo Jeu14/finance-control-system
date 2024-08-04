@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../registerModal/AddRegisterModal.css";
-
 import "./EditRegisterModal.css";
 import { Transacao } from "../../Types/types";
 import { NumericFormat } from "react-number-format";
@@ -10,6 +9,7 @@ import { getItem } from "../../localStorage/localStorage";
 interface EditRegisterModalProps {
   show: boolean;
   onClose: () => void;
+  onUpdate: () => void;
   currentRegister: Transacao | undefined;
 }
 
@@ -18,23 +18,18 @@ interface Categoria {
   descricao: string;
 }
 
-const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
+export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
   show,
   onClose,
+  onUpdate,
   currentRegister,
 }) => {
-  const [valor, setValor] = useState(currentRegister?.valor || "");
-  const [categoria, setCategoria] = useState(
-    currentRegister?.categoria_id || ""
-  );
-  const [data, setData] = useState(currentRegister?.data || "");
-  const [descricao, setDescricao] = useState(currentRegister?.descricao || "");
-  const [tipo, setTipo] = useState<"entrada" | "saida">(
-    currentRegister?.tipo || "entrada"
-  );
+  const [valor, setValor] = useState<string>(currentRegister?.valor.toString() || "");
+  const [categoria, setCategoria] = useState<string>(currentRegister?.categoria_id.toString() || "");
+  const [data, setData] = useState<string>(currentRegister?.data.split("T")[0] || "");
+  const [descricao, setDescricao] = useState<string>(currentRegister?.descricao || "");
+  const [tipo, setTipo] = useState<"entrada" | "saida">(currentRegister?.tipo || "entrada");
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-//   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
-
   const token = getItem("token");
 
   useEffect(() => {
@@ -57,33 +52,43 @@ const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
     fetchCategorias();
   }, [token]);
 
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const updatedRegister = { valor, categoria, data, descricao, tipo };
-    console.log(updatedRegister);
-    
+
+    const updatedRegister = {
+      valor: parseFloat(valor.replace(/[^0-9,.]/g, '').replace(',', '.')),
+      categoria_id: parseInt(categoria),
+      data,
+      descricao,
+      tipo,
+    };
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao/${currentRegister?.id}`,
-        updatedRegister
+        updatedRegister,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      console.log("Registro editado:", response.data);
+      console.log("Registro editado");
+      if (typeof onUpdate === 'function') {
+        onUpdate();
+      }
       onClose();
     } catch (error) {
       console.error("Erro ao editar registro:", error);
     }
   };
 
-  const handleTipoClick = (tipo: "entrada" | "saida") => {
-    setTipo(tipo);
+  const handleTipoClick = (selectedTipo: "entrada" | "saida") => {
+    setTipo(selectedTipo);
   };
 
-  if (!show) {
-    return null;
-  }
-
+  if (!show) return null; 
+  
   return (
     <div className="modal">
       <div className="modal-content">
@@ -131,7 +136,7 @@ const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
               onChange={e => setCategoria(e.target.value)}
             >
               {categorias.map(cat => (
-                <option key={cat.id} value={cat.descricao}>
+                <option key={cat.id} value={cat.id}>
                   {cat.descricao}
                 </option>
               ))}
@@ -159,5 +164,3 @@ const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
     </div>
   );
 };
-
-export default EditRegisterModal;

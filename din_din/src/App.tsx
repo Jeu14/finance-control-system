@@ -7,7 +7,6 @@ import { getItem, setItem, removeItem } from './localStorage/localStorage';
 
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-   
     return getItem('token') !== null;
   });
 

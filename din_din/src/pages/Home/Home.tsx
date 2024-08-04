@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
 import "./style.css";
@@ -8,7 +8,8 @@ import { ResumeTable } from "../../components/resumetable/ResumeTable";
 import { Tabela } from "../../components/table/tabela";
 import { getItem } from "../../localStorage/localStorage";
 import { Transacao } from "../../Types/types";
-import {AddRegisterModal} from "../../components/registerModal/AddRegisterModal";
+import { AddRegisterModal } from "../../components/registerModal/AddRegisterModal";
+import { EditRegisterModal } from "../../components/editModal/EditRegisterModal";
 import axios from "axios";
 
 export const Home = () => {
@@ -29,7 +30,7 @@ export const Home = () => {
 
   useEffect(() => {
     fetchTransacoes();
-  }, []);
+  }, []); 
 
   const fetchTransacoes = async () => {
     const token = getItem("token");
@@ -49,6 +50,10 @@ export const Home = () => {
   };
 
   const handleNewTransaction = () => {
+    fetchTransacoes(); 
+  };
+
+  const handleUpdateTransaction = () => {
     fetchTransacoes(); 
   };
 
@@ -75,6 +80,14 @@ export const Home = () => {
                 onClose={() => setAddRegister(false)}
                 onNewTransaction={handleNewTransaction}
               />
+              {editRegister && (
+                <EditRegisterModal
+                  show={editRegister}
+                  onClose={() => setEditRegister(false)}
+                  onUpdate={handleUpdateTransaction} 
+                  currentRegister={currentRegister}
+                />
+              )}
             </div>
           </div>
         </div>

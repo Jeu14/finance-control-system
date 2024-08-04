@@ -6,13 +6,13 @@ import axios from 'axios';
 import { getItem } from '../../localStorage/localStorage';
 import { ICategoria, TabelaProps, Transacao } from '../../Types/types';
 import { useEffect, useState } from 'react';
-import EditRegisterModal from '../editModal/EditRegisterModal';
+import { EditRegisterModal } from '../editModal/EditRegisterModal';
 
 export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentRegister }: TabelaProps) => {
   const token = getItem("token");
-  const [categorias, setCategorias] = useState<ICategoria[]>([])
+  const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [currentEditRegister, setCurrentEditRegister] = useState<Transacao | undefined>(undefined);
+  const [currentEditRegister] = useState<Transacao | undefined>(undefined);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -31,8 +31,8 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
     fetchCategorias();
   }, [token]);
 
-  const getCategoriaDescricao = (categoriaId: any) => {
-    const categoria = categorias.find(cat => cat.id === categoriaId);
+  const getCategoriaDescricao = (categoriaId: number) => {
+    const categoria = categorias.find(cat => Number(cat.id) === categoriaId);
     return categoria ? categoria.descricao : 'Desconhecida';
   };
 
@@ -42,7 +42,7 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
   };
 
   const handleGetDay = (data: string) => {
-    const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'sábado', 'Domingo'];
+    const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
     const date = new Date(data);
     const day = date.getDay();
     return daysOfWeek[day];
@@ -59,15 +59,30 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
         }
       );
       setTransacao(transacao.filter((transacao) => transacao.id !== id));
-      
     } catch (error) {
       console.error("Erro ao excluir transação:", error);
     }
   };
 
   const handleEditRegister = (id: number) => {
-    setShowEditModal(true);
-    setCurrentEditRegister(transacao.find((transacao) => transacao.id === id));
+    const registro = transacao.find((transacao) => transacao.id === id);
+    if (registro) {
+      setCurrentRegister(registro); 
+      setEditRegister(true); 
+    }
+  };
+
+  const fetchTransacoes = async () => {
+    try {
+      const response = await axios.get('https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTransacao(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar transações:", error);
+    }
   };
 
   return (
@@ -77,7 +92,7 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
           <tr>
             <th scope='col' className='data-th-txt'>
               Data
-              <img src={Triangulo} alt='icone reorganizar por data' />
+              <img src={Triangulo} alt='ícone reorganizar por data' />
             </th>
             <th>Dia da Semana</th>
             <th>Descrição</th>
@@ -105,10 +120,14 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
           ))}
         </tbody>
       </table>
-      {showEditModal && (
+      {showEditModal && currentEditRegister && (
         <EditRegisterModal
           show={showEditModal}
           onClose={() => setShowEditModal(false)}
+          onUpdate={() => {
+            setShowEditModal(false);
+            fetchTransacoes(); 
+          }}
           currentRegister={currentEditRegister}
         />
       )}
