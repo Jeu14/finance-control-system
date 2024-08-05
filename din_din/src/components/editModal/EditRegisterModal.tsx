@@ -100,7 +100,7 @@ export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
             Saída
           </button>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form className="form-edit-transation" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Valor</label>
             <NumericFormat
@@ -148,7 +148,7 @@ export const EditRegisterModal: React.FC<EditRegisterModalProps> = ({
               onChange={e => setDescricao(e.target.value)}
             />
           </div>
-          <button className="submit-button" type="submit">Confirmar</button>
+          <button type="submit">Confirmar</button>
         </form>
       </div>
     </div>
