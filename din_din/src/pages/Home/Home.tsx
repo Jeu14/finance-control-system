@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../index.css";
 import "./style.css";
@@ -30,7 +30,7 @@ export const Home = () => {
 
   useEffect(() => {
     fetchTransacoes();
-  }, []); 
+  }, []);
 
   const fetchTransacoes = async () => {
     const token = getItem("token");
@@ -50,11 +50,11 @@ export const Home = () => {
   };
 
   const handleNewTransaction = () => {
-    fetchTransacoes(); 
+    fetchTransacoes();
   };
 
   const handleUpdateTransaction = () => {
-    fetchTransacoes(); 
+    fetchTransacoes();
   };
 
   return (
@@ -84,7 +84,7 @@ export const Home = () => {
                 <EditRegisterModal
                   show={editRegister}
                   onClose={() => setEditRegister(false)}
-                  onUpdate={handleUpdateTransaction} 
+                  onUpdate={handleUpdateTransaction}
                   currentRegister={currentRegister}
                 />
               )}
