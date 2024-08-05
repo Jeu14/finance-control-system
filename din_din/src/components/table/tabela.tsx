@@ -1,15 +1,21 @@
-import '../../index.css';
+import "../../index.css";
+import "./style.css";
 
-import EditIcon from '../../assets/icons-8-editar-3.svg';
-import TrashIcon from '../../assets/icons-8-lixo-1.svg';
-import Triangulo from '../../assets/triangulo.svg';
-import axios from 'axios';
-import { getItem } from '../../localStorage/localStorage';
-import { ICategoria, TabelaProps, Transacao } from '../../Types/types';
-import { useEffect, useState } from 'react';
-import { EditRegisterModal } from '../editModal/EditRegisterModal';
+import EditIcon from "../../assets/icons-8-editar-3.svg";
+import TrashIcon from "../../assets/icons-8-lixo-1.svg";
+import Triangulo from "../../assets/triangulo.svg";
+import axios from "axios";
+import { getItem } from "../../localStorage/localStorage";
+import { ICategoria, TabelaProps, Transacao } from "../../Types/types";
+import { useEffect, useState } from "react";
+import { EditRegisterModal } from "../editModal/EditRegisterModal";
 
-export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentRegister }: TabelaProps) => {
+export const Tabela = ({
+  transacao,
+  setTransacao,
+  setEditRegister,
+  setCurrentRegister,
+}: TabelaProps) => {
   const token = getItem("token");
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -18,11 +24,14 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await axios.get('https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCategorias(response.data);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
@@ -34,16 +43,26 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
 
   const getCategoriaDescricao = (categoriaId: number) => {
     const categoria = categorias.find(cat => Number(cat.id) === categoriaId);
-    return categoria ? categoria.descricao : 'Desconhecida';
+    return categoria ? categoria.descricao : "Desconhecida";
   };
 
   const handleData = (data: string) => {
-    const date = new Date(data).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+    const date = new Date(data).toLocaleDateString("pt-BR", {
+      timeZone: "UTC",
+    });
     return date;
   };
 
   const handleGetDay = (data: string) => {
-    const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+    const daysOfWeek = [
+      "Segunda",
+      "Terça",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sábado",
+      "Domingo",
+    ];
     const date = new Date(data);
     const day = date.getDay();
     return daysOfWeek[day];
@@ -59,27 +78,30 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
           },
         }
       );
-      setTransacao(transacao.filter((transacao) => transacao.id !== id));
+      setTransacao(transacao.filter(transacao => transacao.id !== id));
     } catch (error) {
       console.error("Erro ao excluir transação:", error);
     }
   };
 
   const handleEditRegister = (id: number) => {
-    const registro = transacao.find((transacao) => transacao.id === id);
+    const registro = transacao.find(transacao => transacao.id === id);
     if (registro) {
-      setCurrentRegister(registro); 
-      setEditRegister(true); 
+      setCurrentRegister(registro);
+      setEditRegister(true);
     }
   };
 
   const fetchTransacoes = async () => {
     try {
-      const response = await axios.get('https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTransacao(response.data);
     } catch (error) {
       console.error("Erro ao buscar transações:", error);
@@ -87,13 +109,13 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
   };
 
   return (
-    <div className='container-table'>
-      <table>
-        <thead>
-          <tr>
-            <th scope='col' className='data-th-txt'>
+    <div className="container-table">
+      <table className="transation-table">
+        <thead className="titles-container">
+          <tr className="title-container-text">
+            <th scope="col" className="data-th-txt">
               Data
-              <img src={Triangulo} alt='ícone reorganizar por data' />
+              <img src={Triangulo} alt="ícone reorganizar por data" />
             </th>
             <th>Dia da Semana</th>
             <th>Descrição</th>
@@ -103,19 +125,44 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {transacao.map((transacao) => (
-            <tr key={transacao.id}>
-              <td>{handleData(transacao.data)}</td>
-              <td>{handleGetDay(transacao.data)}</td>
-              <td className='table-description'>{transacao.descricao}</td>
-              <td className='table-category'>{getCategoriaDescricao(transacao.categoria_id)}</td>
-              <td className='col-value' style={{ color: transacao.tipo === 'saida' ? '#FA8C10' : '#7B61FF' }}>
-                R$ {transacao.valor}
+        <tbody className="list-container">
+          {transacao.map(transacao => (
+            <tr key={transacao.id} className="list-item">
+              <td>
+                <p className="Data-item">{handleData(transacao.data)}</p>
               </td>
-              <td className='edit-icon'>
-                <img src={EditIcon} alt="ícone de editar" style={{ cursor: 'pointer' }} onClick={() => handleEditRegister(transacao.id)} />
-                <img src={TrashIcon} alt="ícone de deletar" style={{ marginLeft: '13px', cursor: 'pointer' }} onClick={() => handleDeleteItem(transacao.id)} />
+              <td>
+                <p>{handleGetDay(transacao.data)}</p>
+              </td>
+              <td className="table-description">
+                <p>{transacao.descricao}</p>
+              </td>
+              <td className="table-category">
+                <p>{getCategoriaDescricao(transacao.categoria_id)}</p>
+              </td>
+              <td
+                className="col-value"
+                style={{
+                  color: transacao.tipo === "saida" ? "#FA8C10" : "#7B61FF",
+                }}
+              >
+                <p>R$ {transacao.valor}</p>
+              </td>
+              <td className="edit-icon">
+                <p>
+                  <img
+                    src={EditIcon}
+                    alt="ícone de editar"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleEditRegister(transacao.id)}
+                  />
+                  <img
+                    src={TrashIcon}
+                    alt="ícone de deletar"
+                    style={{ marginLeft: "13px", cursor: "pointer" }}
+                    onClick={() => handleDeleteItem(transacao.id)}
+                  />
+                </p>
               </td>
             </tr>
           ))}
@@ -127,7 +174,7 @@ export const Tabela = ({ transacao, setTransacao, setEditRegister, setCurrentReg
           onClose={() => setShowEditModal(false)}
           onUpdate={() => {
             setShowEditModal(false);
-            fetchTransacoes(); 
+            fetchTransacoes();
           }}
           currentRegister={currentEditRegister}
         />

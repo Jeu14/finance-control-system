@@ -1,0 +1,29 @@
+.titles-container {
+  background: #fafafa;
+  box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: 58px;
+}
+
+.transation-table {
+  border-collapse: collapse;
+}
+
+.list-item {
+  height: 58px;
+}
+
+.list-item td {
+  border-bottom: 1px solid #E0E0E0;
+  border-collapse: collapse;
+}
+
+.list-item p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Data-item {
+  font-weight: bolder;
+}
