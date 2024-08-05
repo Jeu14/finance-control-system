@@ -1,4 +1,5 @@
 import '../../index.css';
+
 import EditIcon from '../../assets/icons-8-editar-3.svg';
 import TrashIcon from '../../assets/icons-8-lixo-1.svg';
 import Triangulo from '../../assets/triangulo.svg';

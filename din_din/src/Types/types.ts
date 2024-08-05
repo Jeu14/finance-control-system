@@ -48,3 +48,17 @@ export interface EditCategoria {
   id: number;
   descricao: string;
 }
+
+export interface AppRoutesProps {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+export interface ProtectedRouteProps {
+  isAuthenticated: boolean;
+  children: JSX.Element;
+}
+
+export type LoginError = {
+  message: string;
+};

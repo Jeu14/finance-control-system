@@ -5,7 +5,7 @@ import "../index.css";
 import { setItem } from "../localStorage/localStorage";
 import { loginUser } from "../services/authService";
 import "./style.css";
-import {LoginProps} from '../Types/types'
+import {LoginProps, LoginError} from '../Types/types'
 
 
 
@@ -37,10 +37,12 @@ export const Login = ({ setIsAuthenticated }: LoginProps) => {
       setItem("name", data.usuario.nome);
       setIsAuthenticated(true);
       navigate("/home");
-    } catch (error: any) {
-      setErro(error.message || "Usuário e/ou senha inválido(s).");
+    } catch (error) {
+      const loginError = error as LoginError;
+      setErro(loginError.message || "Usuário e/ou senha inválido(s).");
     }
   };
+
 
   const handleChangeForm = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;

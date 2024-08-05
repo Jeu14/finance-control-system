@@ -1,8 +1,5 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Login } from './pages/Login';
-import { Signup } from './pages/SignUp';
-import { Home } from './pages/Home/Home';
+import { AppRoutes } from './routes';
 import { getItem, setItem, removeItem } from './localStorage/localStorage';
 
 export function App() {
@@ -22,16 +19,6 @@ export function App() {
   }, [isAuthenticated]);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/sign-up" element={<Signup />} />
-        <Route
-          path="/home"
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" replace />}
-        />
-      </Routes>
-    </Router>
+    <AppRoutes isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
   );
 }
