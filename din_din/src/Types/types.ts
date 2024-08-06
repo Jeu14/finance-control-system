@@ -67,3 +67,9 @@ export interface ConfirmDeletePopupProps {
   onConfirm: () => void;
   onCancel: () => void;
 }
+
+export interface EditUserModalProps {
+  show: boolean;
+  onClose: () => void;
+  onNameUpdate: (newName: string) => void;
+}

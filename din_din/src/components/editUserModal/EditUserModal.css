@@ -1,0 +1,12 @@
+.edit-user-button {
+  width: 14.75rem;
+  height: 2.875rem;
+  display: block;
+  background-color: #7978d9;
+  color: white;
+  border: none;
+  border-radius: 0.313;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 57px;
+}
