@@ -5,8 +5,10 @@
   height: 3.625rem;
 }
 
+
 .transation-table {
   border-collapse: collapse;
+  width: 62.5rem;
 }
 
 .list-item {
