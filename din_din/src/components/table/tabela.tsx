@@ -9,6 +9,7 @@ import { getItem } from "../../localStorage/localStorage";
 import { ICategoria, TabelaProps, Transacao } from "../../Types/types";
 import { useEffect, useState } from "react";
 import { EditRegisterModal } from "../editModal/EditRegisterModal";
+import { ConfirmDeletePopup } from "../confirmdeletepopup/ConfirmDeletePopup";
 
 export const Tabela = ({
   transacao,
@@ -20,6 +21,7 @@ export const Tabela = ({
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentEditRegister] = useState<Transacao | undefined>(undefined);
+  const [showDeletePopup, setShowDeletePopup] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -160,8 +162,17 @@ export const Tabela = ({
                     src={TrashIcon}
                     alt="ícone de deletar"
                     style={{ marginLeft: "13px", cursor: "pointer" }}
-                    onClick={() => handleDeleteItem(transacao.id)}
+                    onClick={() => setShowDeletePopup(transacao.id)}
                   />
+                  {showDeletePopup === transacao.id && (
+                    <ConfirmDeletePopup
+                      onConfirm={() => {
+                        handleDeleteItem(transacao.id);
+                        setShowDeletePopup(null);
+                      }}
+                      onCancel={() => setShowDeletePopup(null)}
+                    />
+                  )}
                 </p>
               </td>
             </tr>

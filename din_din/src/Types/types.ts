@@ -62,3 +62,8 @@ export interface ProtectedRouteProps {
 export type LoginError = {
   message: string;
 };
+
+export interface ConfirmDeletePopupProps {
+  onConfirm: () => void;
+  onCancel: () => void;
+}

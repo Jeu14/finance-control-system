@@ -7,21 +7,20 @@ main div {
   background: url("../assets/wallpaper.svg"), lightgray 50%;
   background-size: cover;
   background-repeat: no-repeat;
-
   min-height: 100vh;
   width: 100%;
 }
 
 .texto-principal {
-  height: 350px;
-  width: 614px;
-  gap: 33px;
+  height: 21.875rem; 
+  width: 38.375rem; 
+  gap: 2.0625rem; 
 }
 
 .texto-principal h1 {
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 52px;
+  font-size: 3.25rem; 
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -30,7 +29,7 @@ main div {
 .texto-principal p {
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 28px;
+  font-size: 1.75rem; 
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -41,76 +40,73 @@ main div {
 }
 
 .texto-principal button {
-  width: 284px;
-  height: 48px;
-  border-radius: 5px;
+  width: 17.75rem; 
+  height: 3rem;
+  border-radius: 0.3125rem;
   background-color: var(--color-purple);
   border: none;
-
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 14px;
+  font-size: 0.875rem; 
   font-style: normal;
   font-weight: 700;
 }
 
 .area-login {
-  height: 535px;
-  width: 513px;
+  height: 33.4375rem; 
+  width: 32.0625rem; 
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
 
 .area-login h3 {
-  margin: 50px auto;
+  margin: 3.125rem auto; 
   color: var(--color-purple);
   font-family: var(--font-family-rubik);
-  font-size: 28px;
+  font-size: 1.75rem; 
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
 form {
-  width: 449px;
-
+  width: 28.0625rem; 
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  gap: 20px;
+  gap: 1.25rem; 
 }
 
 label {
   color: var(--color-gray);
   font-family: var(--font-family-rubik);
-  font-size: 18px;
+  font-size: 1.125rem; 
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
 input {
-  padding: 10px;
-  border-radius: 5px;
+  padding: 0.625rem; 
+  border-radius: 0.3125rem; 
   border: 1px solid #555;
   background: #fff;
-  width: 449px;
-  height: 50px;
+  width: 28.0625rem; 
+  height: 3.125rem;
   flex-shrink: 0;
 }
 
 form button {
-  width: 449px;
-  margin-top: 50px;
-  height: 52px;
-  border-radius: 5px;
+  width: 28.0625rem; 
+  margin-top: 3.125rem; 
+  height: 3.25rem;
+  border-radius: 0.3125rem; 
   border: none;
-
   background: var(--color-purple);
   font-family: var(--font-family-rubik);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #fff;
   cursor: pointer;
 }
@@ -125,24 +121,24 @@ form button {
 
 .area-register {
   height: 46rem;
-  width: 513px;
+  width: 32.0625rem; 
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
 
 .area-register h3 {
-  margin: 50px auto;
+  margin: 3.125rem auto; 
   color: var(--color-purple);
   font-family: var(--font-family-rubik);
-  font-size: 28px;
+  font-size: 1.75rem; 
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
 .register-form button {
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .login-navigate-button-container {
@@ -153,8 +149,8 @@ form button {
 }
 
 .login-navigate-button {
-  width: 215px;
-  height: 17px;
+  width: 13.4375rem; 
+  height: 1.0625rem;
   background-color: #fff;
   color: var(--color-purple);
   text-align: center;

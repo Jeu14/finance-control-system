@@ -12,95 +12,96 @@
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  height: 660px;
+  padding: 1.25rem;
+  border-radius: 0.625rem;
+  width: 25rem;
+  height: 41.25rem;
   position: relative;
 }
 
 .modal-content h2 {
-  margin-top: 20px;
-  margin-left: 20px;
+  margin-top: 1.25rem;
+  margin-left: 1.25rem;
   font-weight: bold;
-  font-size: 36;
+  font-size: 2.25rem;
   font-family: sans-serif;
 }
 
 .modal-content label {
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .modal-content input {
-  width: 320px;
-  margin-left: 20px;
+  width: 20rem;
+  margin-left: 1.25rem;
 }
 
 .form-group select {
-  width: 320px;
-  height: 50px;
-  margin-left: 20px;
-  border-radius: 5px;
+  width: 20rem;
+  height: 3.125rem;
+  margin-left: 1.25rem;
+  border-radius: 0.3125rem;
 }
 
 .close {
   position: absolute;
-  top: 40px;
-  right: 50px;
-  font-size: 24px;
+  top: 2.5rem;
+  right: 3.125rem;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
 }
 
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .form-group {
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 }
 
 .transaction-type {
   display: table-row;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 1.25rem;
+  margin-top: 1.25rem;
   width: 100%;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .transaction-type button {
   width: 44%;
-  padding: 10px;
+  padding: 0.625rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   color: white;
 }
+
 input,
 select {
   width: 100%;
-  padding: 8px;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
 .confirm-button {
   display: block;
-  width: 236px;
-  padding: 10px;
+  width: 14.75rem;
+  padding: 0.625rem;
   background-color: #7978d9;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
-  font-size: 16px;
-  margin: 0 57px;
+  font-size: 1rem;
+  margin: 0 3.5625rem;
 }
 
 .confirm-button:hover {
