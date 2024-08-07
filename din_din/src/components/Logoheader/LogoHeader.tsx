@@ -7,7 +7,7 @@ import ProfilePic from "../../assets/perfilImage.png";
 import "../../index.css";
 import "./style.css";
 import { HeaderLogoProps } from "../../Types/types";
-import EditUserModal from "../editUserModal/EditUserModal";
+import {EditUserModal} from "../editUserModal/EditUserModal";
 
 export const HeaderLogo = ({ isLoggedIn }: HeaderLogoProps) => {
   const [logout, setLogout] = useState<boolean>(false);
