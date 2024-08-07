@@ -5,7 +5,7 @@ import "./EditUserModal.css";
 import { getItem } from "../../localStorage/localStorage";
 import { EditUserModalProps } from "../../Types/types";
 
-const EditUserModal: React.FC<EditUserModalProps> = ({
+export const EditUserModal: React.FC<EditUserModalProps> = ({
   show,
   onClose,
   onNameUpdate,
@@ -120,4 +120,4 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
   );
 };
 
-export default EditUserModal;
+

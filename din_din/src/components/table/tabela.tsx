@@ -22,6 +22,7 @@ export const Tabela = ({
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentEditRegister] = useState<Transacao | undefined>(undefined);
   const [showDeletePopup, setShowDeletePopup] = useState<number | null>(null);
+  const [isAscending, setIsAscending] = useState(true);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -110,14 +111,28 @@ export const Tabela = ({
     }
   };
 
+  const handleSort = () => {
+    const sortedTransacao = [...transacao].sort((a, b) => {
+      const dateA = new Date(a.data).getTime();
+      const dateB = new Date(b.data).getTime();
+      return isAscending ? dateA - dateB : dateB - dateA;
+    });
+    setIsAscending(!isAscending);
+    setTransacao(sortedTransacao);
+  };
+
   return (
     <div className="container-table">
       <table className="transation-table">
         <thead className="titles-container">
           <tr className="title-container-text">
-            <th scope="col" className="data-th-txt">
+            <th scope="col" className="data-th-txt" onClick={handleSort}>
               Data
-              <img src={Triangulo} alt="ícone reorganizar por data" />
+              <img
+                src={Triangulo}
+                alt="ícone reorganizar por data"
+                className={isAscending ? "rotate-up" : "rotate-down"}
+              />
             </th>
             <th>Dia da Semana</th>
             <th>Descrição</th>
