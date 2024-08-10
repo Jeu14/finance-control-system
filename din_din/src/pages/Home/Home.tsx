@@ -1,3 +1,5 @@
+// Home.tsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterArea } from "../../components/filterArea/FilterArea";
@@ -18,7 +20,6 @@ export const Home = () => {
   const [editRegister, setEditRegister] = useState<boolean>(false);
   const [currentRegister, setCurrentRegister] = useState<Transacao | undefined>(undefined);
   const [transacao, setTransacao] = useState<Transacao[]>([]);
-  
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ export const Home = () => {
     fetchTransacoes();
   }, []);
 
-  const fetchTransacoes = async (filters = []) => {
+  const fetchTransacoes = async (filters: string [] = []) => {
     const token = getItem("token");
     try {
       const response = await axios.get(
@@ -62,11 +63,10 @@ export const Home = () => {
   const toggleFilters = () => {
     setShowFilters(!showFilters);
   };
-
-  const handleApplyFilters = (selectedFilters) => {
+  const handleApplyFilters = (selectedFilters: string[]) => {
     fetchTransacoes(selectedFilters);
   };
-
+  
   const handleClearFilters = () => {
     fetchTransacoes([]);
   };
@@ -76,13 +76,11 @@ export const Home = () => {
       <HeaderLogo isLoggedIn={true} />
       <main className="main-home">
         <div className="container-description">
-          <div onClick={toggleFilters}>
-            <FilterButton />
-          </div>
+          <FilterButton toggleFilters={toggleFilters} />
           {showFilters && (
             <FilterArea
-              onApplyFilter={handleApplyFilters}
-              onClearFilter={handleClearFilters}
+              onApplyFilters={handleApplyFilters}
+              onClearFilters={handleClearFilters}
             />
           )}
           <div className="description">

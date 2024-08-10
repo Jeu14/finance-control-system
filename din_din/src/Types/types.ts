@@ -73,3 +73,21 @@ export interface EditUserModalProps {
   onClose: () => void;
   onNameUpdate: (newName: string) => void;
 }
+
+
+export interface FilterButtonProps {
+  toggleFilters: () => void;
+}
+
+
+
+export interface Categoria {
+  id: number;
+  descricao: string;
+}
+
+
+export interface FilterAreaProps {
+  onApplyFilters: (filters: string[]) => void;
+  onClearFilters: () => void;
+}

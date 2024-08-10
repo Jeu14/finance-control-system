@@ -2,10 +2,13 @@ import "./style.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getItem } from "../../localStorage/localStorage";
+import { Categoria, FilterAreaProps } from "../../Types/types";
 
-export const FilterArea = ({ onApplyFilters, onClearFilters }) => {
-  const [categorias, setCategorias] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+
+
+export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearFilters }) => {
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -28,26 +31,34 @@ export const FilterArea = ({ onApplyFilters, onClearFilters }) => {
     fetchCategorias();
   }, []);
 
-  const handleCheckboxChange = (categoria) => {
+  const handleCheckboxChange = (categoriaDescricao: string) => {
     setSelectedFilters((prev) =>
-      prev.includes(categoria)
-        ? prev.filter((item) => item !== categoria)
-        : [...prev, categoria]
+      prev.includes(categoriaDescricao)
+        ? prev.filter((item) => item !== categoriaDescricao)
+        : [...prev, categoriaDescricao]
     );
   };
 
   const applyFilters = () => {
-    onApplyFilters(selectedFilters);
+    if (typeof onApplyFilters === 'function') {
+      onApplyFilters(selectedFilters);
+    } else {
+      console.error('onApplyFilters não é uma função');
+    }
   };
 
   const clearFilters = () => {
     setSelectedFilters([]);
-    onClearFilters(); 
+    if (typeof onClearFilters === 'function') {
+      onClearFilters();
+    } else {
+      console.error('onClearFilters não é uma função');
+    }
   };
 
   return (
     <div className="filter-modal">
-      <h3 className="name-categories">Filtros por Categoria</h3>
+      <h3 className="name-categories"> Categoria</h3>
       <div className="box-categories">
         {categorias.map((categoria) => (
           <div
