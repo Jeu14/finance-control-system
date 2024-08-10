@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FilterArea } from "../../components/filterArea/FilterArea";
 import "../../index.css";
 import "./style.css";
 import { FilterButton } from "../../components/filterbutton/FilterButton";
@@ -15,10 +16,10 @@ import axios from "axios";
 export const Home = () => {
   const [addRegister, setAddRegister] = useState<boolean>(false);
   const [editRegister, setEditRegister] = useState<boolean>(false);
-  const [currentRegister, setCurrentRegister] = useState<Transacao | undefined>(
-    undefined
-  );
+  const [currentRegister, setCurrentRegister] = useState<Transacao | undefined>(undefined);
   const [transacao, setTransacao] = useState<Transacao[]>([]);
+  
+  const [showFilters, setShowFilters] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,12 +33,13 @@ export const Home = () => {
     fetchTransacoes();
   }, []);
 
-  const fetchTransacoes = async () => {
+  const fetchTransacoes = async (filters = []) => {
     const token = getItem("token");
     try {
       const response = await axios.get(
         "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
         {
+          params: filters.length > 0 ? { filtro: filters } : {},
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,12 +59,32 @@ export const Home = () => {
     fetchTransacoes();
   };
 
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const handleApplyFilters = (selectedFilters) => {
+    fetchTransacoes(selectedFilters);
+  };
+
+  const handleClearFilters = () => {
+    fetchTransacoes([]);
+  };
+
   return (
     <div className="background">
       <HeaderLogo isLoggedIn={true} />
       <main className="main-home">
         <div className="container-description">
-          <FilterButton />
+          <div onClick={toggleFilters}>
+            <FilterButton />
+          </div>
+          {showFilters && (
+            <FilterArea
+              onApplyFilter={handleApplyFilters}
+              onClearFilter={handleClearFilters}
+            />
+          )}
           <div className="description">
             <Tabela
               transacao={transacao}
