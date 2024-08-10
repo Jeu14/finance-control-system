@@ -4,8 +4,6 @@ import axios from "axios";
 import { getItem } from "../../localStorage/localStorage";
 import { Categoria, FilterAreaProps } from "../../Types/types";
 
-
-
 export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearFilters }) => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -40,20 +38,12 @@ export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearF
   };
 
   const applyFilters = () => {
-    if (typeof onApplyFilters === 'function') {
-      onApplyFilters(selectedFilters);
-    } else {
-      console.error('onApplyFilters não é uma função');
-    }
+    onApplyFilters(selectedFilters);
   };
 
   const clearFilters = () => {
     setSelectedFilters([]);
-    if (typeof onClearFilters === 'function') {
-      onClearFilters();
-    } else {
-      console.error('onClearFilters não é uma função');
-    }
+    onClearFilters();
   };
 
   return (
