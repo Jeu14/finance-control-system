@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getItem } from "../../localStorage/localStorage";
 import { Categoria, FilterAreaProps } from "../../Types/types";
+import XIcon from "../../assets/X-icon.svg";
+import AddIcon from "../../assets/add-icon.svg";
 
 export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearFilters }) => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -60,7 +62,12 @@ export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearF
             }`}
             onClick={() => handleCheckboxChange(categoria.descricao)}
           >
-            {categoria.descricao}
+            {categoria.descricao}{" "}
+            {selectedFilters.includes(categoria.descricao) ? (
+              <img src={XIcon} alt="x icon" />
+            ) : (
+              <img src={AddIcon} alt="Add icon" />
+            )}
           </div>
         ))}
       </div>
