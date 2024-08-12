@@ -1,19 +1,20 @@
-// Home.tsx
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { FilterArea } from "../../components/filterArea/FilterArea";
 import "../../index.css";
 import "./style.css";
 import { FilterButton } from "../../components/filterbutton/FilterButton";
 import { HeaderLogo } from "../../components/Logoheader/LogoHeader";
+
 import { ResumeTable } from "../../components/resumetable/ResumeTable";
 import { Tabela } from "../../components/table/tabela";
 import { getItem } from "../../localStorage/localStorage";
 import { Transacao } from "../../Types/types";
 import { AddRegisterModal } from "../../components/registerModal/AddRegisterModal";
 import { EditRegisterModal } from "../../components/editModal/EditRegisterModal";
-import axios from "axios";
+import { fetchHomeTransacoes } from "../../services/api";
+
 
 export const Home = () => {
   const [addRegister, setAddRegister] = useState<boolean>(false);
@@ -31,44 +32,38 @@ export const Home = () => {
   }, [navigate]);
 
   useEffect(() => {
-    fetchTransacoes();
-  }, []);
-
-  const fetchTransacoes = async (filters: string [] = []) => {
-    const token = getItem("token");
-    try {
-      const response = await axios.get(
-        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
-        {
-          params: filters.length > 0 ? { filtro: filters } : {},
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setTransacao(response.data);
-    } catch (error) {
+    fetchHomeTransacoes().then(setTransacao).catch(error => {
       console.error("Erro ao buscar transações:", error);
-    }
-  };
+    });
+  }, []);
+  
 
   const handleNewTransaction = () => {
-    fetchTransacoes();
+    fetchHomeTransacoes().then(setTransacao).catch(error => {
+      console.error("Erro ao buscar transações:", error);
+    });
   };
 
   const handleUpdateTransaction = () => {
-    fetchTransacoes();
+    fetchHomeTransacoes().then(setTransacao).catch(error => {
+      console.error("Erro ao buscar transações:", error);
+    });
   };
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
   };
+
   const handleApplyFilters = (selectedFilters: string[]) => {
-    fetchTransacoes(selectedFilters);
+    fetchHomeTransacoes(selectedFilters).then(setTransacao).catch(error => {
+      console.error("Erro ao aplicar filtros:", error);
+    });
   };
-  
+
   const handleClearFilters = () => {
-    fetchTransacoes([]);
+    fetchHomeTransacoes([]).then(setTransacao).catch(error => {
+      console.error("Erro ao limpar filtros:", error);
+    });
   };
 
   return (

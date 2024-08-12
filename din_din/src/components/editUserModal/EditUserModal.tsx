@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import "./EditUserModal.css";
-import { getItem } from "../../localStorage/localStorage";
+
 import { EditUserModalProps } from "../../Types/types";
+import { fetchUser, updateUser } from "../../services/api";
+
 
 export const EditUserModal: React.FC<EditUserModalProps> = ({
   show,
   onClose,
   onNameUpdate,
 }) => {
-  const token = getItem("token");
   const [nome, setName] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setPassword] = useState("");
@@ -19,23 +19,16 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/usuario",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setName(response.data.nome);
-        setEmail(response.data.email);
+        const userData = await fetchUser();
+        setName(userData.nome);
+        setEmail(userData.email);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
     };
 
     fetchUserData();
-  }, [token]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,16 +39,9 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
     const updatedUser = { nome, email, senha };
 
     try {
-      const response = await axios.put(
-        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/usuario",
-        updatedUser,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Usuário atualizado:", response.data);
+
+      await updateUser(updatedUser);
+      
       onNameUpdate(nome);
       onClose();
     } catch (error) {
@@ -119,5 +105,3 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({
     </div>
   );
 };
-
-

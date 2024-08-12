@@ -4,12 +4,13 @@ import "./style.css";
 import EditIcon from "../../assets/icons-8-editar-3.svg";
 import TrashIcon from "../../assets/icons-8-lixo-1.svg";
 import Triangulo from "../../assets/triangulo.svg";
-import axios from "axios";
-import { getItem } from "../../localStorage/localStorage";
+
 import { ICategoria, TabelaProps, Transacao } from "../../Types/types";
 import { useEffect, useState } from "react";
 import { EditRegisterModal } from "../editModal/EditRegisterModal";
 import { ConfirmDeletePopup } from "../confirmdeletepopup/ConfirmDeletePopup";
+import { deleteTransacao, fetchCategorias, fetchTransacoes } from "../../services/api";
+
 
 export const Tabela = ({
   transacao,
@@ -17,7 +18,6 @@ export const Tabela = ({
   setEditRegister,
   setCurrentRegister,
 }: TabelaProps) => {
-  const token = getItem("token");
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentEditRegister] = useState<Transacao | undefined>(undefined);
@@ -25,24 +25,17 @@ export const Tabela = ({
   const [isAscending, setIsAscending] = useState(true);
 
   useEffect(() => {
-    const fetchCategorias = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setCategorias(response.data);
+        const data = await fetchCategorias();
+        setCategorias(data);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
 
-    fetchCategorias();
-  }, [token]);
+    fetchData();
+  }, []);
 
   const getCategoriaDescricao = (categoriaId: number) => {
     const categoria = categorias.find(cat => Number(cat.id) === categoriaId);
@@ -73,14 +66,9 @@ export const Tabela = ({
 
   const handleDeleteItem = async (id: number) => {
     try {
-      await axios.delete(
-        `https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+
+      await deleteTransacao(id);
+      
       setTransacao(transacao.filter(transacao => transacao.id !== id));
     } catch (error) {
       console.error("Erro ao excluir transação:", error);
@@ -95,21 +83,20 @@ export const Tabela = ({
     }
   };
 
-  const fetchTransacoes = async () => {
-    try {
-      const response = await axios.get(
-        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setTransacao(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar transações:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        const data = await fetchTransacoes();
+        
+        setTransacao(data);
+      } catch (error) {
+        console.error("Erro ao buscar transações:", error);
+      }
+    };
+
+    fetchData();
+  }, [setTransacao]);
 
   const handleSort = () => {
     const sortedTransacao = [...transacao].sort((a, b) => {

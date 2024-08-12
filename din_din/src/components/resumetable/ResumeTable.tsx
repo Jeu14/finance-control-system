@@ -1,36 +1,29 @@
 import { useState, useEffect } from "react";
+
 import "./style.css";
+
 import { ResumeTableProps, Transacao } from "../../Types/types";
-import axios from "axios";
-import { getItem } from "../../localStorage/localStorage";
+import { fetchExtract } from "../../services/api";
+
 
 export const ResumeTable = ({ transacao }: ResumeTableProps) => {
   const [entrada, setEntrada] = useState<number>(0);
   const [saida, setSaida] = useState<number>(0);
   const saldo = entrada - saida;
 
-  const token = getItem("token");
-
   useEffect(() => {
-    const fetchResumo = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao/extrato",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setEntrada(response.data.entrada);
-        setSaida(response.data.saida);
-        console.log(response);
+        const data = await fetchExtract();
+        setEntrada(data.entrada);
+        setSaida(data.saida);
       } catch (error) {
-        console.error("Erro ao buscar resumo:", error);
+        console.error("Erro ao buscar extrato de transações:", error);
       }
-    };  
-    fetchResumo();
-  }, [token]);
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     let totalEntrada = 0;

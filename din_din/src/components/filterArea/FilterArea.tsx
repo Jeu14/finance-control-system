@@ -1,34 +1,28 @@
-import "./style.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { getItem } from "../../localStorage/localStorage";
-import { Categoria, FilterAreaProps } from "../../Types/types";
+
 import XIcon from "../../assets/X-icon.svg";
 import AddIcon from "../../assets/add-icon.svg";
+
+import "./style.css";
+
+import { Categoria, FilterAreaProps } from "../../Types/types";
+import { fetchCategorias } from "../../services/api";
 
 export const FilterArea: React.FC<FilterAreaProps> = ({ onApplyFilters, onClearFilters }) => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchCategorias = async () => {
-      const token = getItem("token");
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setCategorias(response.data);
+        const data = await fetchCategorias();
+        setCategorias(data);
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
 
-    fetchCategorias();
+    fetchData();
   }, []);
 
   const handleCheckboxChange = (categoriaDescricao: string) => {

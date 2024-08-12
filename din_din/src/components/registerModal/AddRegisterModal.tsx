@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { NumericFormat } from 'react-number-format';
+import { NumericFormat } from "react-number-format";
 
 import "./AddRegisterModal.css";
-import { getItem } from "../../localStorage/localStorage";
+
+import { fetchCategorias, addRegister } from "../../services/api";
 import { AddRegisterModalProps, ICategoria } from "../../Types/types";
 
- export const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
+export const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
   show,
   onClose,
   onNewTransaction,
@@ -18,27 +18,21 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
   const [tipo, setTipo] = useState<"entrada" | "saida">("entrada");
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
 
-  const token = getItem("token");
-
   useEffect(() => {
-    const fetchCategorias = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://desafio-backend-03-dindin.pedagogico.cubos.academy/categoria",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setCategoria(response.data);
+        const data = await fetchCategorias();
+        setCategoria(data);
+        if (data.length > 0) {
+          setCategoriaSelecionada(data[0].descricao);
+        }
       } catch (error) {
         console.error("Erro ao buscar categorias:", error);
       }
     };
 
-    fetchCategorias();
-  }, [token]);
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (categoria.length > 0) {
@@ -48,30 +42,27 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const categoriaId = categoria.find(
-      (option) => option.descricao === categoriaSelecionada
+      option => option.descricao === categoriaSelecionada
     )?.id;
-    const newRegister = { tipo, valor: Number(valor), categoria_id: categoriaId, data, descricao };
+    const newRegister = {
+      tipo,
+      valor: Number(valor),
+      categoria_id: categoriaId,
+      data,
+      descricao,
+    };
 
     try {
-      const response = await axios.post(
-        "https://desafio-backend-03-dindin.pedagogico.cubos.academy/transacao",
-        newRegister,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await addRegister(newRegister);
 
-      if (response.status === 201) {
-        setTipo("entrada");
-        setCategoriaSelecionada(categoria[0].descricao);
-        setData("");
-        setValor("");
-        setDescricao("");
-        onNewTransaction();
-      }
+      setTipo("entrada");
+      setCategoriaSelecionada(categoria[0].descricao);
+      setData("");
+      setValor("");
+      setDescricao("");
+      onNewTransaction();
       onClose();
     } catch (error) {
       console.error("Erro ao adicionar registro:", error);
@@ -116,7 +107,7 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
             <label>Valor</label>
             <NumericFormat
               value={valor}
-              onValueChange={(values) => {
+              onValueChange={values => {
                 const { value } = values;
                 setValor(value);
               }}
@@ -134,9 +125,9 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
             <label>Categoria</label>
             <select
               value={categoriaSelecionada}
-              onChange={(e) => setCategoriaSelecionada(e.target.value)}
+              onChange={e => setCategoriaSelecionada(e.target.value)}
             >
-              {categoria.map((option) => (
+              {categoria.map(option => (
                 <option key={option.id} value={option.descricao}>
                   {option.descricao}
                 </option>
@@ -148,7 +139,7 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
             <input
               type="date"
               value={data}
-              onChange={(e) => setData(e.target.value)}
+              onChange={e => setData(e.target.value)}
               required
             />
           </div>
@@ -157,7 +148,7 @@ import { AddRegisterModalProps, ICategoria } from "../../Types/types";
             <input
               type="text"
               value={descricao}
-              onChange={(e) => setDescricao(e.target.value)}
+              onChange={e => setDescricao(e.target.value)}
               required
             />
           </div>
