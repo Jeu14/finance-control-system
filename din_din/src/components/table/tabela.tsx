@@ -9,7 +9,11 @@ import { ICategoria, TabelaProps, Transacao } from "../../Types/types";
 import { useEffect, useState } from "react";
 import { EditRegisterModal } from "../editModal/EditRegisterModal";
 import { ConfirmDeletePopup } from "../confirmdeletepopup/ConfirmDeletePopup";
-import { deleteTransacao, fetchCategorias, fetchTransacoes } from "../../services/api";
+import {
+  deleteTransacao,
+  fetchCategorias,
+  fetchTransacoes,
+} from "../../services/api";
 
 
 export const Tabela = ({
@@ -66,9 +70,8 @@ export const Tabela = ({
 
   const handleDeleteItem = async (id: number) => {
     try {
-
       await deleteTransacao(id);
-      
+
       setTransacao(transacao.filter(transacao => transacao.id !== id));
     } catch (error) {
       console.error("Erro ao excluir transação:", error);
@@ -86,9 +89,8 @@ export const Tabela = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         const data = await fetchTransacoes();
-        
+
         setTransacao(data);
       } catch (error) {
         console.error("Erro ao buscar transações:", error);
@@ -110,77 +112,79 @@ export const Tabela = ({
 
   return (
     <div className="container-table">
-      <table className="transation-table">
-        <thead className="titles-container">
-          <tr className="title-container-text">
-            <th scope="col" className="data-th-txt" onClick={handleSort}>
-              Data
-              <img
-                src={Triangulo}
-                alt="ícone reorganizar por data"
-                className={isAscending ? "rotate-up" : "rotate-down"}
-              />
-            </th>
-            <th>Dia da Semana</th>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Valor</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className="list-container">
-          {transacao.map(transacao => (
-            <tr key={transacao.id} className="list-item">
-              <td>
-                <p className="Data-item">{handleData(transacao.data)}</p>
-              </td>
-              <td>
-                <p>{handleGetDay(transacao.data)}</p>
-              </td>
-              <td className="table-description">
-                <p>{transacao.descricao}</p>
-              </td>
-              <td className="table-category">
-                <p>{getCategoriaDescricao(transacao.categoria_id)}</p>
-              </td>
-              <td
-                className="col-value"
-                style={{
-                  color: transacao.tipo === "saida" ? "#FA8C10" : "#7B61FF",
-                }}
-              >
-                <p>R$ {transacao.valor}</p>
-              </td>
-              <td className="edit-icon">
-                <p>
-                  <img
-                    src={EditIcon}
-                    alt="ícone de editar"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleEditRegister(transacao.id)}
-                  />
-                  <img
-                    src={TrashIcon}
-                    alt="ícone de deletar"
-                    style={{ marginLeft: "13px", cursor: "pointer" }}
-                    onClick={() => setShowDeletePopup(transacao.id)}
-                  />
-                  {showDeletePopup === transacao.id && (
-                    <ConfirmDeletePopup
-                      onConfirm={() => {
-                        handleDeleteItem(transacao.id);
-                        setShowDeletePopup(null);
-                      }}
-                      onCancel={() => setShowDeletePopup(null)}
-                    />
-                  )}
-                </p>
-              </td>
+      <div className="table-scroll">
+        <table className="transation-table">
+          <thead className="titles-container">
+            <tr className="title-container-text">
+              <th scope="col" className="data-th-txt" onClick={handleSort}>
+                Data
+                <img
+                  src={Triangulo}
+                  alt="ícone reorganizar por data"
+                  className={isAscending ? "rotate-up" : "rotate-down"}
+                />
+              </th>
+              <th>Dia da Semana</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Valor</th>
+              <th></th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="list-container">
+            {transacao.map(transacao => (
+              <tr key={transacao.id} className="list-item">
+                <td>
+                  <p className="Data-item">{handleData(transacao.data)}</p>
+                </td>
+                <td>
+                  <p>{handleGetDay(transacao.data)}</p>
+                </td>
+                <td className="table-description">
+                  <p>{transacao.descricao}</p>
+                </td>
+                <td className="table-category">
+                  <p>{getCategoriaDescricao(transacao.categoria_id)}</p>
+                </td>
+                <td
+                  className="col-value"
+                  style={{
+                    color: transacao.tipo === "saida" ? "#FA8C10" : "#7B61FF",
+                  }}
+                >
+                  <p>R$ {transacao.valor}</p>
+                </td>
+                <td className="edit-icon">
+                  <p>
+                    <img
+                      src={EditIcon}
+                      alt="ícone de editar"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleEditRegister(transacao.id)}
+                    />
+                    <img
+                      src={TrashIcon}
+                      alt="ícone de deletar"
+                      style={{ marginLeft: "13px", cursor: "pointer" }}
+                      onClick={() => setShowDeletePopup(transacao.id)}
+                    />
+                    {showDeletePopup === transacao.id && (
+                      <ConfirmDeletePopup
+                        onConfirm={() => {
+                          handleDeleteItem(transacao.id);
+                          setShowDeletePopup(null);
+                        }}
+                        onCancel={() => setShowDeletePopup(null)}
+                      />
+                    )}
+                  </p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {showEditModal && currentEditRegister && (
         <EditRegisterModal
           show={showEditModal}

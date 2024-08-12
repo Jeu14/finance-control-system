@@ -5,9 +5,21 @@
   height: 3.625rem;
 }
 
+.container-table {
+  width: 100%;
+  max-width: 62.5rem;
+}
+
 .transation-table {
   border-collapse: collapse;
   width: 62.5rem;
+}
+
+.table-scroll {
+  max-height: 25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.938rem;
 }
 
 .list-item {
@@ -15,7 +27,7 @@
 }
 
 .list-item td {
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid #e0e0e0;
   border-collapse: collapse;
 }
 
@@ -31,7 +43,6 @@
 
 .data-th-txt {
   cursor: pointer;
- 
 }
 
 .rotate-up {
