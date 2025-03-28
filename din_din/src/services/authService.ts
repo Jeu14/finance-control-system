@@ -2,7 +2,7 @@ import axios from 'axios';
 import { LoginError } from '../Types/types';
 
 
-const API_URL = 'https://desafio-backend-03-dindin.pedagogico.cubos.academy';
+const API_URL = 'https://din-din-api-production.up.railway.app';
 
 export const loginUser = async (email: string, senha: string) => {
   try {
