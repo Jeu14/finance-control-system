@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getItem } from "../localStorage/localStorage";
 
-const apiUrl = "https://desafio-backend-03-dindin.pedagogico.cubos.academy";
+const apiUrl = "https://din-din-api-production.up.railway.app";
 
 export const fetchCategorias = async () => {
   const token = getItem("token");
