@@ -12,15 +12,15 @@ main div {
 }
 
 .texto-principal {
-  height: 21.875rem; 
-  width: 38.375rem; 
-  gap: 2.0625rem; 
+  height: 21.875rem;
+  width: 38.375rem;
+  gap: 2.0625rem;
 }
 
 .texto-principal h1 {
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 3.25rem; 
+  font-size: 3.25rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -29,7 +29,7 @@ main div {
 .texto-principal p {
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 1.75rem; 
+  font-size: 1.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -40,68 +40,68 @@ main div {
 }
 
 .texto-principal button {
-  width: 17.75rem; 
+  width: 17.75rem;
   height: 3rem;
   border-radius: 0.3125rem;
   background-color: var(--color-purple);
   border: none;
   color: #fff;
   font-family: var(--font-family-rubik);
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
 }
 
 .area-login {
-  height: 33.4375rem; 
-  width: 32.0625rem; 
+  height: 33.4375rem;
+  width: 32.0625rem;
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
 
 .area-login h3 {
-  margin: 3.125rem auto; 
+  margin: 3.125rem auto;
   color: var(--color-purple);
   font-family: var(--font-family-rubik);
-  font-size: 1.75rem; 
+  font-size: 1.75rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 
 form {
-  width: 28.0625rem; 
+  width: 28.0625rem;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  gap: 1.25rem; 
+  gap: 1.25rem;
 }
 
 label {
   color: var(--color-gray);
   font-family: var(--font-family-rubik);
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
 input {
-  padding: 0.625rem; 
-  border-radius: 0.3125rem; 
+  padding: 0.625rem;
+  border-radius: 0.3125rem;
   border: 1px solid #555;
   background: #fff;
-  width: 28.0625rem; 
+  width: 28.0625rem;
   height: 3.125rem;
   flex-shrink: 0;
 }
 
 form button {
-  width: 28.0625rem; 
-  margin-top: 3.125rem; 
+  width: 28.0625rem;
+  margin-top: 3.125rem;
   height: 3.25rem;
-  border-radius: 0.3125rem; 
+  border-radius: 0.3125rem;
   border: none;
   background: var(--color-purple);
   font-family: var(--font-family-rubik);
@@ -121,17 +121,17 @@ form button {
 
 .area-register {
   height: 46rem;
-  width: 32.0625rem; 
+  width: 32.0625rem;
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
 
 .area-register h3 {
-  margin: 3.125rem auto; 
+  margin: 3.125rem auto;
   color: var(--color-purple);
   font-family: var(--font-family-rubik);
-  font-size: 1.75rem; 
+  font-size: 1.75rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -149,9 +149,52 @@ form button {
 }
 
 .login-navigate-button {
-  width: 13.4375rem; 
+  width: 13.4375rem;
   height: 1.0625rem;
   background-color: #fff;
   color: var(--color-purple);
   text-align: center;
+}
+
+@media (max-width: 900px) {
+  main {
+    flex-direction: column;
+  }
+
+  .texto-principal {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 100px;
+    margin-top: -60px;
+    height: 19.875rem;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .area-login {
+    height: 28.4375rem;
+  }
+
+  form {
+    gap: 0.55rem;
+  }
+}
+
+@media (max-width: 1280px) {
+  main {
+    justify-content: center;
+    width: auto;
+  }
+
+  .area-register {
+    height: 37rem;
+  }
+
+  .area-register h3 {
+    margin: 1.125rem auto;
+  }
+
+  .register-form input {
+    height: 2rem;
+  }
 }
