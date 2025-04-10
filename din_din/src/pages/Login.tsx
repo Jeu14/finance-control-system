@@ -61,12 +61,14 @@ export const Login = ({ setIsAuthenticated }: LoginProps) => {
             Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você
             tem tudo num único lugar e em um clique de distância.
           </p>
+          <div>
           <button
             onClick={() => navigate("/sign-up")}
             style={{ cursor: "pointer" }}
           >
             Cadastre-se
           </button>
+          </div>
         </div>
         <div className="area-login">
           <h3>Login</h3>
