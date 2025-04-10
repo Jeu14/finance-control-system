@@ -89,3 +89,13 @@
   color: #fff;
   background: #7978d9;
 }
+
+@media (max-width: 900px) {
+  .filter-modal {
+    width: auto;
+  }
+
+  .filter-modal {
+    margin-left: 0;
+  }
+}

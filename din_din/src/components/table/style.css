@@ -54,3 +54,9 @@
   transform: rotate(180deg);
   transition: transform 0.3s ease-in-out;
 }
+
+@media (max-width: 900px) {
+  .transation-table {
+    width: auto;
+  }
+}

@@ -1,5 +1,5 @@
 .profile-area {
-  width: 14.375rem; 
+  width: 14.375rem;
   height: 3.5rem;
   display: flex;
   align-items: center;
@@ -11,18 +11,30 @@
 }
 
 .profile-area .profile-pic {
-  width: 3.5rem; 
-  height: 3.5rem; 
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
-  margin-right: 1rem; 
+  margin-right: 1rem;
 }
 
 .profile-area strong {
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: var(--font-family-rubik);
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+}
+
+@media (max-width: 900px) {
+  header {
+    width: auto;
+  }
+}
+
+@media (max-width: 1280px) {
+  header {
+    justify-content: space-around;
+  }
 }
