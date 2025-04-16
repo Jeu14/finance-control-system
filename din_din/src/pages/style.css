@@ -156,27 +156,29 @@ form button {
   text-align: center;
 }
 
-@media (max-width: 900px) {
-  main {
-    flex-direction: column;
-  }
+@media (min-width: 590px) {
+  @media (max-width: 1200px) {
+    main {
+      flex-direction: column;
+    }
 
-  .texto-principal {
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 100px;
-    margin-top: -60px;
-    height: 19.875rem;
-    gap: 1rem;
-    align-items: center;
-  }
+    .texto-principal {
+      text-align: center;
+      padding: 1rem;
+      margin-bottom: 100px;
+      margin-top: -60px;
+      height: 19.875rem;
+      gap: 1rem;
+      align-items: center;
+    }
 
-  .area-login {
-    height: 28.4375rem;
-  }
+    .area-login {
+      height: 28.4375rem;
+    }
 
-  form {
-    gap: 0.55rem;
+    form {
+      gap: 0.55rem;
+    }
   }
 }
 
@@ -196,5 +198,32 @@ form button {
 
   .register-form input {
     height: 2rem;
+  }
+}
+
+@media (min-width: 1281px) {
+  main {
+    justify-content: space-around;
+    width: auto;
+  }
+
+  .area-register {
+    height: 37rem;
+  }
+
+  .area-register h3 {
+    margin: 1.125rem auto;
+  }
+
+  .register-form input {
+    height: 2rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  main {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
   }
 }

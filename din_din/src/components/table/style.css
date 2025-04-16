@@ -55,7 +55,7 @@
   transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1900px) {
   .transation-table {
     width: auto;
   }
