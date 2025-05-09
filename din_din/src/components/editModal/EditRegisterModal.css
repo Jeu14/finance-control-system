@@ -14,3 +14,21 @@
 button:hover {
   background-color: #3700b3;
 }
+
+@media (min-width: 300px) {
+  @media (max-width: 620px) {
+    form {
+      width: 13rem;
+      gap: 0;
+    }
+
+    .form-edit-transation button {
+      width: 100%;
+      margin: 0;
+    }
+
+    .container-resume-button {
+      width: 14.75rem;
+    }
+  }
+}

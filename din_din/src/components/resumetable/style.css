@@ -2,8 +2,8 @@
   width: 14.75rem;
   height: 12.25rem;
   border-radius: 0.625rem;
-  box-shadow: 0px 0.125rem 0.6875rem 0px rgba(0, 0, 0, 0.10);
-  background: #FAFAFA;
+  box-shadow: 0px 0.125rem 0.6875rem 0px rgba(0, 0, 0, 0.1);
+  background: #fafafa;
   display: flex;
   justify-content: space-evenly;
 }
@@ -12,7 +12,7 @@
   margin: 0 auto;
   width: 10.625rem;
   height: 0.0625rem;
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
   border-style: none;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .container-txt-h2-resume h2 {
-  color: #2F2F2F;
+  color: #2f2f2f;
   font-family: var(--font-family-rubik);
   font-size: 1.125rem;
   font-weight: 700;
@@ -40,7 +40,7 @@
 td {
   height: 2rem;
   width: 10.625rem;
-  color: #2F2F2F;
+  color: #2f2f2f;
   font-family: var(--font-family-rubik);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -51,11 +51,11 @@ td {
 }
 
 .entrace {
-  color: #645FFB;
+  color: #645ffb;
 }
 
 .balance {
-  color: #3A9FF1;
+  color: #3a9ff1;
 }
 
 .balance-txt {
@@ -64,5 +64,59 @@ td {
 }
 
 .exit {
-  color: #FA8C10;
+  color: #fa8c10;
+}
+
+@media (min-width: 630px) {
+  @media (max-width: 800px) {
+    .resume {
+      width: 10rem;
+    }
+
+    .table-resume {
+      width: 90%;
+    }
+
+    .resume hr {
+      width: 90%;
+    }
+
+    .container-txt-h2-resume {
+      width: 90%;
+    }
+  }
+}
+
+@media (min-width: 300px) {
+  @media (max-width: 629px) {
+    .resume {
+      width: 6rem;
+    }
+
+    .table-resume {
+      width: 100%;
+    }
+
+    .resume hr {
+      width: 90%;
+    }
+
+    .container-txt-h2-resume {
+      width: 100%;
+    }
+
+    .container-txt-h2-resume h2 {
+      font-size: 15px;
+    }
+
+    .table-resume tr,
+    td {
+      font-size: 8px;
+      font-weight: 600;
+    }
+
+    .balance-txt {
+      font-size: 10px;
+    }
+  }
 }

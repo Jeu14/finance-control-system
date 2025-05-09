@@ -152,7 +152,7 @@ export const AddRegisterModal: React.FC<AddRegisterModalProps> = ({
               required
             />
           </div>
-          <button className="confirm-button" type="submit">
+          <button className="Add-register-button" type="submit">
             Confirmar
           </button>
         </form>

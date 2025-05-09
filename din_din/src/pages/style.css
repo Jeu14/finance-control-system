@@ -167,13 +167,25 @@ form button {
       padding: 1rem;
       margin-bottom: 100px;
       margin-top: -60px;
-      height: 19.875rem;
+      height: 8.875rem;
       gap: 1rem;
       align-items: center;
     }
 
+    .texto-principal h1 {
+      font-size: 2rem;
+    }
+
+    .texto-principal p {
+      font-size: 1rem;
+    }
+
     .area-login {
       height: 28.4375rem;
+    }
+
+    .area-register {
+      height: 32rem;
     }
 
     form {
@@ -182,14 +194,18 @@ form button {
   }
 }
 
+@media (min-width: 1201px) {
+  @media (max-width: 1279px) {
+    .area-register {
+      height: 37rem;
+    }
+  }
+}
+
 @media (max-width: 1280px) {
   main {
     justify-content: center;
     width: auto;
-  }
-
-  .area-register {
-    height: 37rem;
   }
 
   .area-register h3 {
@@ -225,5 +241,58 @@ form button {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+  }
+}
+
+@media (min-width: 300px) {
+  @media (max-width: 620px) {
+    main {
+      flex-direction: column;
+    }
+
+    .texto-principal {
+      text-align: center;
+      padding: 1rem;
+      margin-bottom: 0;
+      margin-top: -60px;
+      height: 12.875rem;
+      gap: 1rem;
+      align-items: center;
+      width: auto;
+    }
+
+    .texto-principal h1 {
+      font-size: 1.2rem;
+    }
+
+    .texto-principal p {
+      font-size: 0.8rem;
+    }
+
+    .area-login {
+      height: 20.4375rem;
+      width: 18rem;
+    }
+
+    .area-login h3 {
+      margin: 0.56rem auto;
+    }
+
+    .area-login button {
+      width: 100%;
+    }
+
+    form {
+      gap: 0.55rem;
+    }
+
+    .area-register {
+      width: 18rem;
+      height: 26rem;
+    }
+
+    .area-register button {
+      width: 100%;
+    }
   }
 }

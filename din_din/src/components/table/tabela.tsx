@@ -166,7 +166,7 @@ export const Tabela = ({
                     <img
                       src={TrashIcon}
                       alt="ícone de deletar"
-                      style={{ marginLeft: "13px", cursor: "pointer" }}
+                      style={{ marginLeft: "5px", cursor: "pointer" }}
                       onClick={() => setShowDeletePopup(transacao.id)}
                     />
                     {showDeletePopup === transacao.id && (

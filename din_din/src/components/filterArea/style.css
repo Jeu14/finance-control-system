@@ -99,3 +99,19 @@
     margin-left: 0;
   }
 }
+
+@media (min-width: 300px) {
+  @media (max-width: 620px) {
+    .box-categories {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .each-category {
+      font-size: 12px;
+    }
+
+    .btn-filters {
+      font-size: 12px;
+    }
+  }
+}

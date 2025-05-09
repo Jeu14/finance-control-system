@@ -35,3 +35,21 @@
     margin-right: 5rem;
   }
 }
+
+@media (min-width: 300px) {
+  @media (max-width: 800px) {
+    header {
+      margin-right: 1rem;
+      margin-left: 1rem;
+    }
+    .profile-area {
+      width: 8rem;
+    }
+
+    .profile-area .profile-pic {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0;
+    }
+  }
+}

@@ -91,9 +91,9 @@ select {
   box-sizing: border-box;
 }
 
-.confirm-button {
+.Add-register-button {
   display: block;
-  width: 14.75rem;
+  width: 14rem;
   padding: 0.625rem;
   background-color: #7978d9;
   color: white;
@@ -106,4 +106,56 @@ select {
 
 .confirm-button:hover {
   background-color: #3700b3;
+}
+
+@media (min-width: 300px) {
+  @media (max-width: 620px) {
+    .modal-content {
+      height: 28.25rem;
+      width: 18rem;
+    }
+
+    .modal-content h2 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .close {
+      top: 1.1rem;
+    }
+
+    .transaction-type {
+      margin-top: 0.2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .transaction-type button {
+      align-items: center;
+      height: 2rem;
+    }
+
+    .form-group input {
+      width: 13rem;
+    }
+
+    .modal-content label {
+      margin-left: 0;
+      font-size: 12px;
+    }
+
+    .modal-content input {
+      margin-left: 0;
+    }
+
+    .modal-content select {
+      margin-left: 0;
+      width: 13rem;
+    }
+
+    .Add-register-button {
+      margin: 0;
+      width: 100%;
+    }
+  }
 }
